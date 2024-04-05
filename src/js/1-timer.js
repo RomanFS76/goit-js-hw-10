@@ -16,6 +16,8 @@ btnStart.disabled = true;
 const currentTime = new Date();
 // console.log(currentTime);
 
+let userSelectDates;
+
 const options = {
     enableTime: true,
     time_24hr: true,
@@ -24,25 +26,24 @@ const options = {
 
     onClose(selectedDates) {
         // console.log(selectedDates[0]);
-        let userSelectedDate;
-
         if (selectedDates[0] >= currentTime) {
-            userSelectedDate = selectedDates[0];
+            userSelectDates = selectedDates[0];
             btnStart.disabled = false;
         } else {
             btnStart.disabled = true;
             window.alert('Please choose a date in the future');
         }
-
-        const differenceTime = convertMs(userSelectedDate - currentTime);
-        console.log(differenceTime);
-        updateTimer(differenceTime);
-        
-        
     }
-}
+};
+// console.log(userSelectDates);
+
+//  const differenceTime = convertMs(userSelectedDate - currentTime);
+//  console.log(differenceTime);
+//  updateTimer(differenceTime);
 
 flatpickr('#datetime-picker', options);
+
+
 
 
 
