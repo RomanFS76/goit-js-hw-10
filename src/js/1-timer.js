@@ -35,11 +35,11 @@ const options = {
         }
     }
 };
-// console.log(userSelectDates);
+console.log(userSelectDates);
 
-//  const differenceTime = convertMs(userSelectedDate - currentTime);
-//  console.log(differenceTime);
-//  updateTimer(differenceTime);
+ const differenceTime = convertMs(userSelectedDate - currentTime);
+ console.log(differenceTime);
+ updateTimer(differenceTime);
 
 flatpickr('#datetime-picker', options);
 
