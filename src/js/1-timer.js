@@ -9,13 +9,15 @@ const hoursEl = document.querySelector('[data-hours]');
 const minutesEL = document.querySelector('[data-minutes]');
 const secondsEl = document.querySelector('[data-seconds]');
 
-// btnStart.addEventListener('click',);
+btnStart.addEventListener('click', event => {
+    btnStart.disabled = false;
+    startTimer();
+
+});
 
 btnStart.disabled = true;
-
-
 const currentTime = new Date();
-console.log(currentTime);
+
 
 let userSelectDates;
 
@@ -27,27 +29,36 @@ const options = {
     
     onClose(selectedDates) {
         userSelectDates = selectedDates[0];
-
-        if (selectedDates[0] >= currentTime) {
-        btnStart.disabled = false;
-            } else {
+        console.log(userSelectDates);
+        if (userSelectDates >= currentTime) {
+            btnStart.disabled = false;
+        } else {
             btnStart.disabled = true;
-            window.alert('Please choose a date in the future');
+        window.alert('Please choose a date in the future');
         }
     }
 };
 
 flatpickr('#datetime-picker', options);
 
-        const differenceTime = (userSelectDates - currentTime);
-        // console.log(differenceTime);
-        // updateTimer(differenceTime);
-    // console.log(updateTimer(differenceTime));
+function startTimer() {
+    const intervalId = setInterval(timer, 1000);
+    // clearInterval(intervalId);
+}
 
-
+const differenceTime = userSelectDates - currentTime;
+console.log(currentTime);
 console.log(userSelectDates);
 console.log(differenceTime);
 
+function timer() {
+    if (differenceTime > 0) {
+        differenceTime -=1000;
+        updateTimer(convertMs(differenceTime));
+    } else {
+        clearInterval(intervalId);
+    }
+}
 
 function updateTimer({ days, hours, minutes, seconds }) { 
     daysEl.textContent = `${days}`;
@@ -56,28 +67,26 @@ function updateTimer({ days, hours, minutes, seconds }) {
     secondsEl.textContent = `${seconds}`;
 };
 
-// function addLeadingZero(value) {
-//   return String(value).padStart(2, '0');
-// }
+function addLeadingZero(value) {
+    return String(value).padStart(2, '0');
+}
 
-// function convertMs(ms) {
-//     // Number of milliseconds per unit of time
-//     const second = 1000;
-//     const minute = second * 60;
-//     const hour = minute * 60;
-//     const day = hour * 24;
+function convertMs(ms) {
+    // Number of milliseconds per unit of time
+    const second = 1000;
+    const minute = second * 60;
+    const hour = minute * 60;
+    const day = hour * 24;
 
-//     // Remaining days
-//     const days = addLeadingZero(Math.floor(ms / day));
-//     // Remaining hours
-//     const hours = addLeadingZero(Math.floor((ms % day) / hour));
-//     // Remaining minutes
-//     const minutes = addLeadingZero(Math.floor(((ms % day) % hour) / minute));
-//     // Remaining seconds
-//     const seconds = addLeadingZero(
-//       Math.floor((((ms % day) % hour) % minute) / second)
-//     );
-
-//     return { days, hours, minutes, seconds };
-// }
+    // Remaining days
+    const days = addLeadingZero(Math.floor(ms / day));
+    // Remaining hours
+    const hours = addLeadingZero(Math.floor((ms % day) / hour));
+    // Remaining minutes
+    const minutes = addLeadingZero(Math.floor(((ms % day) % hour) / minute));
+    // Remaining seconds
+    const seconds = addLeadingZero(
+        Math.floor((((ms % day) % hour) % minute) / second)
+    );
+}
 
