@@ -16,9 +16,8 @@ btnStart.addEventListener('click', event => {
 });
 
 btnStart.disabled = true;
+
 const currentTime = new Date();
-
-
 let userSelectDates;
 
 const options = {
@@ -29,7 +28,6 @@ const options = {
     
     onClose(selectedDates) {
         userSelectDates = selectedDates[0];
-        console.log(userSelectDates);
         if (userSelectDates >= currentTime) {
             btnStart.disabled = false;
         } else {
@@ -47,9 +45,12 @@ function startTimer() {
 }
 
 const differenceTime = userSelectDates - currentTime;
-console.log(currentTime);
-console.log(userSelectDates);
-console.log(differenceTime);
+
+
+console.log(`currentTime: ${currentTime}`);
+console.log(`differenceTime: ${differenceTime}`);
+console.log(`userSelectDates: ${userSelectDates}`);
+
 
 function timer() {
     if (differenceTime > 0) {
