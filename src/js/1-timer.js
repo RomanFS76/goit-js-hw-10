@@ -9,6 +9,7 @@ const daysEl = document.querySelector('[data-days]');
 const hoursEl = document.querySelector('[data-hours]');
 const minutesEL = document.querySelector('[data-minutes]');
 const secondsEl = document.querySelector('[data-seconds]');
+const inputEl = document.querySelector('#datetime-picker');
 
 btnStart.disabled = true;
 
@@ -23,7 +24,7 @@ const options = {
   onClose(selectedDates) {
     if (selectedDates[0] >= new Date()) {
       btnStart.disabled = false;
-        userSelectDates = selectedDates[0];
+      userSelectDates = selectedDates[0];
     } else {
       btnStart.disabled = true;
       iziToast.show({
@@ -38,26 +39,15 @@ const options = {
 
 flatpickr('#datetime-picker', options);
 
+
+  
+let diff;
+
 btnStart.addEventListener('click', event => {
-    let diff = userSelectDates - Date.now();
-    const convertDate = convertMs(diff);
-
-    updateTimer(convertDate);
-
-    function startTimer() {
-        const intervalId = setInterval(() => {
-        if (diff > 2) {
-            diff = diff - 1000;
-            updateTimer(convertMs(diff));
-            console.log(intervalId);
-        } else {
-            clearInterval(intervalId);
-        }
-        }, 1000);
-    }
-
-    startTimer();
-    btnStart.disabled = true;
+  diff = userSelectDates - Date.now();
+  updateTimer(convertMs(diff));
+  startTimer();
+  btnStart.disabled = true;
 });
 
 function convertMs(ms) {
@@ -92,8 +82,15 @@ function addLeadingZero(value) {
   return String(value).padStart(2, '0');
 }
 
-
-
-
-
-
+  function startTimer() {
+    const intervalId = setInterval(() => {
+      if (diff > 1000) {
+        diff = diff - 1000;
+        updateTimer(convertMs(diff));
+        inputEl.disabled = true;
+      } else {
+        clearInterval(intervalId);
+        inputEl.disabled = false;
+      }
+    }, 1000);
+}
